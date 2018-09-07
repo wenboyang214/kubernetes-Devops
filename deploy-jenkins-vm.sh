@@ -2,6 +2,7 @@
 export resourceGroup=wb-sa-k8s-jenkins
 virtualMachine=wbjenkins
 adminUser=azureuser
+adminPassword=@#123Lksdi
 pathToKubeConfig=/home/azureuser/.kube/config
 
 if [ -f $pathToKubeConfig ]
@@ -11,7 +12,7 @@ then
     az group create --name $resourceGroup --location chinaeast2
 
     # Create a new virtual machine, this creates SSH keys if not present.
-    az vm create --resource-group $resourceGroup --name $virtualMachine --admin-username $adminUser --image UbuntuLTS --generate-ssh-keys
+    az vm create --resource-group $resourceGroup --name $virtualMachine --admin-username $adminUser --admin-password $adminPassword --image UbuntuLTS
 
     # Open port 22 to allow web traffic to host.
     az vm open-port --port 80 --resource-group $resourceGroup --name $virtualMachine  --priority 101
